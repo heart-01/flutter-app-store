@@ -118,8 +118,8 @@ class LoginForm extends StatelessWidget {
                       _formKeyLogin.currentState!.save();
 
                       // show data form in console
-                      print("Email: ${_emailController.text}");
-                      print("Password: ${_passwordController.text}");
+                      debugPrint("Email: ${_emailController.text}");
+                      debugPrint("Password: ${_passwordController.text}");
                     }
                   },
                 ),

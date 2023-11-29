@@ -22,23 +22,30 @@ class ResponsiveLayout extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Card(
-                elevation: 12,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                // Using for responsive layout
-                child: LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                    // If the width of screen is more than 800 then show webChild
-                    if (constraints.maxWidth > 800) {
-                      return webChild;
-                    }
-                    return mobileChild;
-                  },
-                )),
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            debugPrint('touch screen');
+          },
+          child: Center(
+            child: SingleChildScrollView(
+              child: Card(
+                  elevation: 12,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  // Using for responsive layout
+                  child: LayoutBuilder(
+                    builder:
+                        (BuildContext context, BoxConstraints constraints) {
+                      // If the width of screen is more than 800 then show webChild
+                      if (constraints.maxWidth > 800) {
+                        return webChild;
+                      }
+                      return mobileChild;
+                    },
+                  )),
+            ),
           ),
         ),
       ),
