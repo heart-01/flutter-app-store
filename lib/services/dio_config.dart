@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_store/main.dart';
 import 'package:flutter_store/utils/constants.dart';
 
 class DioConfig {
@@ -16,22 +16,22 @@ class DioConfig {
     }, onError: (DioException e, handler) async {
       switch (e.response?.statusCode) {
         case 400:
-          debugPrint('Bad Request');
+          logger.e('Bad Request');
           break;
         case 401:
-          debugPrint('Unauthorized');
+          logger.e('Unauthorized');
           break;
         case 403:
-          debugPrint('Forbidden');
+          logger.e('Forbidden');
           break;
         case 404:
-          debugPrint('Not Found');
+          logger.e('Not Found');
           break;
         case 500:
-          debugPrint('Internal Server Error');
+          logger.e('Internal Server Error');
           break;
         default:
-          debugPrint('Something went wrong');
+          logger.e('Something went wrong');
           break;
       }
       return handler.next(e);

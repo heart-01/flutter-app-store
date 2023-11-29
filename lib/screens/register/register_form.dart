@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_store/app_router.dart';
 import 'package:flutter_store/components/rounded_button.dart';
 import 'package:flutter_store/components/text_input.dart';
+import 'package:flutter_store/main.dart';
+import 'package:flutter_store/services/rest_api.dart';
+import 'package:flutter_store/utils/utility.dart';
 
 class RegisterForm extends StatelessWidget {
   RegisterForm({Key? key}) : super(key: key);
@@ -126,19 +131,54 @@ class RegisterForm extends StatelessWidget {
                 ),
                 RoundedButton(
                   label: "SIGN UP",
-                  onPressed: () {
+                  onPressed: () async {
                     // validate data form
                     if (_formKeyRegister.currentState!.validate()) {
                       // save state data form to _formKeySignUp
                       _formKeyRegister.currentState!.save();
 
                       // show data form in console
-                      debugPrint("FirstName: ${_firstNameController.text}");
-                      debugPrint("LastName: ${_lastNameController.text}");
-                      debugPrint("Email: ${_emailController.text}");
-                      debugPrint("Password: ${_passwordController.text}");
-                      debugPrint(
-                          "Confirm Password: ${_passwordConfirmController.text}");
+                      // debugPrint("FirstName: ${_firstNameController.text}");
+                      // debugPrint("LastName: ${_lastNameController.text}");
+                      // debugPrint("Email: ${_emailController.text}");
+                      // debugPrint("Password: ${_passwordController.text}");
+                      // debugPrint( "Confirm Password: ${_passwordConfirmController.text}");
+
+                      var response = await CallAPI().registerAPI({
+                        "firstname": _firstNameController.text,
+                        "lastname": _lastNameController.text,
+                        "email": _emailController.text,
+                        "password": _passwordController.text
+                      });
+
+                      var body = jsonDecode(response);
+
+                      logger.i(body);
+
+                      // check context.mounted because it's in an async function.
+                      if (context.mounted) {
+                        if (body['message'] == 'No Network Connection') {
+                          Utility.showAlertDialog(
+                            context,
+                            'แจ้งเตือน',
+                            body['message'],
+                          );
+                        } else {
+                          if (body['status'] == 'ok') {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              AppRouter.login,
+                            );
+                          } else {
+                            _formKeyRegister.currentState!.reset();
+                            Utility.showAlertDialog(
+                              context,
+                              'แจ้งเตือน',
+                              body['message'],
+                            );
+                          }
+                        }
+                      }
                     }
                   },
                 )
