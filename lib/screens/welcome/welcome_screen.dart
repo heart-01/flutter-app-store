@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_store/app_router.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -15,6 +16,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
   void _onIntroEnd(context) async {
+    // Set welcome status when user click Done.
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('welcomeStatus', true);
+
     // goto Login
     Navigator.pushReplacementNamed(context, AppRouter.login);
   }
