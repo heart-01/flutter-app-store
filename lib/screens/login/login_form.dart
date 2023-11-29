@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_store/app_router.dart';
 import 'package:flutter_store/components/rounded_button.dart';
 import 'package:flutter_store/components/social_media_options.dart';
 import 'package:flutter_store/components/text_input.dart';
+import 'package:flutter_store/main.dart';
+import 'package:flutter_store/services/rest_api.dart';
+import 'package:flutter_store/utils/utility.dart';
 
 class LoginForm extends StatelessWidget {
   LoginForm({Key? key}) : super(key: key);
@@ -88,15 +93,50 @@ class LoginForm extends StatelessWidget {
                 ),
                 RoundedButton(
                   label: "LOGIN",
-                  onPressed: () {
+                  onPressed: () async {
                     // validate data form
                     if (_formKeyLogin.currentState!.validate()) {
                       // save state data form to _formKeyLogin
                       _formKeyLogin.currentState!.save();
 
                       // show data form in console
-                      debugPrint("Email: ${_emailController.text}");
-                      debugPrint("Password: ${_passwordController.text}");
+                      // debugPrint("Email: ${_emailController.text}");
+                      // debugPrint("Password: ${_passwordController.text}");
+
+                      var response = await CallAPI().loginAPI({
+                        "email": _emailController.text,
+                        "password": _passwordController.text,
+                      });
+
+                      var body = jsonDecode(response);
+
+                      logger.i(body);
+
+                      // check context.mounted because it's in an async function.
+                      if (context.mounted) {
+                        if (body['message'] == 'No Network Connection') {
+                          Utility.showAlertDialog(
+                            context,
+                            'แจ้งเตือน',
+                            body['message'],
+                          );
+                        } else {
+                          if (body['status'] == 'ok') {
+                            Utility.showAlertDialog(
+                              context,
+                              'แจ้งเตือน',
+                              'Login Success.',
+                            );
+                          } else {
+                            _formKeyLogin.currentState!.reset();
+                            Utility.showAlertDialog(
+                              context,
+                              'แจ้งเตือน',
+                              body['message'],
+                            );
+                          }
+                        }
+                      }
                     }
                   },
                 ),

@@ -23,4 +23,20 @@ class CallAPI {
       }
     }
   }
+
+  // Login API
+  loginAPI(data) async {
+    // Check Network Connection
+    if (await Utility.checkNetwork() == '') {
+      return jsonEncode({'message': 'No Network Connection'});
+    } else {
+      try {
+        final response = await _dio.post('auth/login', data: data);
+        logger.d(response.data);
+        return jsonEncode(response.data);
+      } catch (error) {
+        logger.e(error);
+      }
+    }
+  }
 }
