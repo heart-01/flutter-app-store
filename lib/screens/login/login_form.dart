@@ -126,6 +126,14 @@ class LoginForm extends StatelessWidget {
                               'success',
                               'Login Success.',
                             );
+
+                            Map<String, dynamic> user = {
+                              'isAutenticate': true,
+                              'token': body['token'],
+                              'userInfo': body['user']
+                            };
+
+                            await Utility.setSharedPreference('user', user);
                           } else {
                             _formKeyLogin.currentState!.reset();
                             Utility.showAlertDialog(

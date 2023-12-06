@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class Utility {
   // Logger
@@ -119,6 +120,10 @@ class Utility {
     if (value is int) return await _preferences!.setInt(key, value);
     if (value is bool) return await _preferences!.setBool(key, value);
     if (value is double) return await _preferences!.setDouble(key, value);
+    if (value is Map) {
+      String stringify = jsonEncode(value);
+      return await _preferences!.setString(key, stringify);
+    }
     return false;
   }
 

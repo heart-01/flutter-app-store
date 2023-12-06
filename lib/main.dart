@@ -8,10 +8,12 @@ void main() async {
   // Test Logger
   Utility().testLogger();
 
-  WidgetsFlutterBinding .ensureInitialized(); // Must be used when the main function is async
+  WidgetsFlutterBinding.ensureInitialized(); // Must be used when the main function is async
 
   await Utility.initSharedPrefs();
-  if (Utility.getSharedPreference('welcomeStatus') == true) {
+  if (await Utility.getSharedPreference('user') != null) {
+    initialRoute = AppRouter.dashboard;
+  } else if (await Utility.getSharedPreference('welcomeStatus') == true) {
     initialRoute = AppRouter.login;
   }
 
