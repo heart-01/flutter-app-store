@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_store/models/product_model.dart';
+import 'package:flutter_store/screens/bottomnavpage/home_screen.dart';
 import 'package:flutter_store/screens/products/components/product_form.dart';
 import 'package:flutter_store/services/rest_api.dart';
 import 'package:flutter_store/utils/utility.dart';
@@ -54,6 +55,7 @@ class _ProductAddState extends State<ProductAdd> {
                 if (body['status'] == 'ok') {
                   if (context.mounted) {
                     Navigator.pop(context, true);
+                    refreshKey.currentState!.show(); // Refresh HomeScreen
                   }
                 }
               }

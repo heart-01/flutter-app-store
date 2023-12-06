@@ -4,6 +4,8 @@ import 'package:flutter_store/models/product_model.dart';
 import 'package:flutter_store/screens/products/components/product_item.dart';
 import 'package:flutter_store/services/rest_api.dart';
 
+var refreshKey = GlobalKey<RefreshIndicatorState>();
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -38,27 +40,33 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: CallAPI().getAllProducts(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.hasError) {
-            // Error
-            return const Center(
-              child: Text('มีข้อผิดพลาด โปรดลองใหม่อีกครั้ง'),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            // Success
-            List<ProductModel> products = snapshot.data;
-            return isLayoutGridView
-                ? layoutGridView(products)
-                : layoutListView(products);
-          } else {
-            // Pending
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+      body: RefreshIndicator(
+        key: refreshKey,
+        onRefresh: () async {
+          setState(() {});
         },
+        child: FutureBuilder(
+          future: CallAPI().getAllProducts(),
+          builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.hasError) {
+              // Error
+              return const Center(
+                child: Text('มีข้อผิดพลาด โปรดลองใหม่อีกครั้ง'),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              // Success
+              List<ProductModel> products = snapshot.data;
+              return isLayoutGridView
+                  ? layoutGridView(products)
+                  : layoutListView(products);
+            } else {
+              // Pending
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
+        ),
       ),
     );
   }
