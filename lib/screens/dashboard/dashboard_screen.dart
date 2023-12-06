@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_store/app_router.dart';
+import 'package:flutter_store/screens/bottomnavpage/home_screen.dart';
+import 'package:flutter_store/screens/bottomnavpage/notification_screen.dart';
+import 'package:flutter_store/screens/bottomnavpage/profile_screen.dart';
+import 'package:flutter_store/screens/bottomnavpage/report_screen.dart';
+import 'package:flutter_store/screens/bottomnavpage/setting_screen.dart';
+import 'package:flutter_store/themes/colors.dart';
 import 'package:flutter_store/utils/utility.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -10,7 +16,45 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  _logout() {
+  // Bottom Navigation
+  String titleScreen = 'Flutter Store';
+  int indexCurrentRenderScreen = 0;
+  final List<Widget> renderScreen = const [
+    HomeScreen(),
+    ReportScreen(),
+    NotificationScreen(),
+    SettingScreen(),
+    ProfileScreen()
+  ];
+
+  void handleOnClickBottomNavigation(int index) {
+    setState(
+      () {
+        indexCurrentRenderScreen = index;
+        switch (index) {
+          case 0:
+            titleScreen = 'Home';
+            break;
+          case 1:
+            titleScreen = 'Report';
+            break;
+          case 2:
+            titleScreen = 'Notification';
+            break;
+          case 3:
+            titleScreen = 'Setting';
+            break;
+          case 4:
+            titleScreen = 'Profile';
+            break;
+          default:
+            titleScreen = 'Flutter Store';
+        }
+      },
+    );
+  }
+
+  handleOnClickLogout() {
     // Remove user shared preference
     Utility.removeSharedPreference('user');
 
@@ -26,7 +70,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: Text(titleScreen),
       ),
       drawer: Drawer(
         backgroundColor: Colors.white,
@@ -78,7 +122,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ListTile(
                     leading: const Icon(Icons.exit_to_app_outlined),
                     title: const Text('Logout'),
-                    onTap: _logout,
+                    onTap: handleOnClickLogout,
                   ),
                 ],
               ),
@@ -86,8 +130,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ],
         ),
       ),
-      body: const Center(
-        child: Text('Dashboard Screen'),
+      body: renderScreen[indexCurrentRenderScreen],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: indexCurrentRenderScreen,
+        onTap: (index) {
+          handleOnClickBottomNavigation(index);
+        },
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: primaryDark,
+        unselectedItemColor: secondaryText,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart_outlined),
+            label: 'Report',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications_outlined),
+            label: 'Notification',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined),
+            label: 'Setting',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }
