@@ -4,9 +4,9 @@ import 'package:flutter_store/screens/drawerpage/contact_screen.dart';
 import 'package:flutter_store/screens/drawerpage/info_screen.dart';
 import 'package:flutter_store/screens/forgot-password/forgot_password_screen.dart';
 import 'package:flutter_store/screens/login/login_screen.dart';
-import 'package:flutter_store/screens/products/components/product_add.dart';
-import 'package:flutter_store/screens/products/components/product_detail.dart';
-import 'package:flutter_store/screens/products/components/product_update.dart';
+import 'package:flutter_store/screens/products/product_add.dart';
+import 'package:flutter_store/screens/products/product_detail.dart';
+import 'package:flutter_store/screens/products/product_update.dart';
 import 'package:flutter_store/screens/register/register_screen.dart';
 import 'package:flutter_store/screens/welcome/welcome_screen.dart';
 
