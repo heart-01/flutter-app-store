@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_store/app_router.dart';
 import 'package:flutter_store/models/product_model.dart';
 import 'package:flutter_store/screens/products/components/product_item.dart';
 import 'package:flutter_store/services/rest_api.dart';
@@ -30,7 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('สินค้า'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, AppRouter.productAdd);
+            },
             icon: const Icon(Icons.add),
           ),
         ],
