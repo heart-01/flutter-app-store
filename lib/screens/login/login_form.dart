@@ -15,8 +15,8 @@ class LoginForm extends StatelessWidget {
   final _formKeyLogin = GlobalKey<FormState>();
 
   // creaet controller input field email and password
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _emailController = TextEditingController(text: 'admin@email.com');
+  final _passwordController = TextEditingController(text: 'password');
 
   @override
   Widget build(BuildContext context) {
