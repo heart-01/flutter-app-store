@@ -7,6 +7,7 @@ import 'package:flutter_store/screens/bottomnavpage/report_screen.dart';
 import 'package:flutter_store/screens/bottomnavpage/setting_screen.dart';
 import 'package:flutter_store/themes/colors.dart';
 import 'package:flutter_store/utils/utility.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -108,21 +109,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.info_outline),
-                  title: const Text('Info'),
+                  title: Text(AppLocalizations.of(context)!.menu_info),
                   onTap: () {
                     Navigator.pushNamed(context, AppRouter.info);
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.person_outline),
-                  title: const Text('About'),
+                  title: Text(AppLocalizations.of(context)!.menu_about),
                   onTap: () {
                     Navigator.pushNamed(context, AppRouter.about);
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.email_outlined),
-                  title: const Text('Contact'),
+                  title: Text(AppLocalizations.of(context)!.menu_contact),
                   onTap: () {
                     Navigator.pushNamed(context, AppRouter.contact);
                   },
@@ -135,7 +136,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: [
                   ListTile(
                     leading: const Icon(Icons.exit_to_app_outlined),
-                    title: const Text('Logout'),
+                    title: Text(AppLocalizations.of(context)!.menu_logout),
                     onTap: handleOnClickLogout,
                   ),
                 ],
@@ -153,26 +154,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: primaryDark,
         unselectedItemColor: secondaryText,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
+            icon: const Icon(Icons.home_outlined),
+            label: AppLocalizations.of(context)!.menu_home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart_outlined),
-            label: 'Report',
+            icon: const Icon(Icons.bar_chart_outlined),
+            label: AppLocalizations.of(context)!.menu_report,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications_outlined),
-            label: 'Notification',
+            icon: const Icon(Icons.notifications_outlined),
+            label: AppLocalizations.of(context)!.menu_notification,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            label: 'Setting',
+            icon: const Icon(Icons.settings_outlined),
+            label: AppLocalizations.of(context)!.menu_setting,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'Profile',
+            icon: const Icon(Icons.person_outline),
+            label: AppLocalizations.of(context)!.menu_profile,
           ),
         ],
       ),
