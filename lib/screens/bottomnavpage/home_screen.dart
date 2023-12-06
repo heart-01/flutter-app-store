@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_store/models/product_model.dart';
+import 'package:flutter_store/screens/products/components/product_item.dart';
+import 'package:flutter_store/services/rest_api.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,32 +35,45 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: isLayoutGridView ? layoutGridView() : layoutListView(),
+      body: FutureBuilder(
+        future: CallAPI().getAllProducts(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) {
+            // Error
+            return const Center(
+              child: Text('มีข้อผิดพลาด โปรดลองใหม่อีกครั้ง'),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            // Success
+            List<ProductModel> products = snapshot.data;
+            return isLayoutGridView
+                ? layoutGridView(products)
+                : layoutListView(products);
+          } else {
+            // Pending
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
     );
   }
 
   // layout gridView Widget
-  Widget layoutGridView() {
+  Widget layoutGridView(List<ProductModel> products) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2 // Number of column
           ),
-      itemCount: 12,
+      itemCount: products.length,
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(0, 1),
-                  blurRadius: 2,
-                ),
-              ],
-            ),
+          child: ProductItem(
+            isLayoutGridView: true,
+            product: products[index],
+            handleOnClickProduct: () {},
           ),
         );
       },
@@ -65,27 +81,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // layout listView Widget
-  Widget layoutListView() {
+  Widget layoutListView(List<ProductModel> products) {
     return ListView.builder(
-      itemCount: 12,
+      itemCount: products.length,
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-          child: SizedBox(
-            height: 350,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(0, 1),
-                    blurRadius: 2,
-                  ),
-                ],
-              ),
-            ),
+          padding: const EdgeInsets.all(8.0),
+          child: ProductItem(
+            product: products[index],
+            handleOnClickProduct: () {},
           ),
         );
       },
