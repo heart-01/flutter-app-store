@@ -65,16 +65,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2, // Number of column
+        crossAxisSpacing: 0,
+        mainAxisSpacing: 0,
+        mainAxisExtent: 200,
       ),
       itemCount: products.length,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ProductItem(
-            isLayoutGridView: true,
-            product: products[index],
-            handleOnClickProduct: () {},
-          ),
+        return ProductItem(
+          isLayoutGridView: true,
+          product: products[index],
+          handleOnClickProduct: () {},
         );
       },
     );
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
       itemCount: products.length,
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+          padding: const EdgeInsets.only(top: 4.0, left: 4.0, right: 4.0),
           child: SizedBox(
             height: 350,
             child: ProductItem(

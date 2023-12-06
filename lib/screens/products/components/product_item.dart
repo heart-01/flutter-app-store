@@ -18,44 +18,43 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      style: TextButton.styleFrom(
-        padding: EdgeInsets.zero,
-      ),
-      onPressed: handleOnClickProduct,
-      child: LayoutBuilder(
-        builder: (context, constraint) => Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Column(
-            children: [_buildImage(constraint.maxHeight), _buildInfo()],
-          ),
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
         ),
-      ),
-    );
+        onPressed: handleOnClickProduct,
+        child: LayoutBuilder(
+          builder: (context, constraint) => Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _buildImage(constraint.maxHeight),
+                _buildInfo(),
+              ],
+            ),
+          ),
+        ));
   }
 
   // _buildImage Widget
-  Stack _buildImage(double maxHeight) {
+  SizedBox _buildImage(double maxHeight) {
     // Check list or grid view
     // Case of list view
-    var height = maxHeight * 0.70;
+    var height = maxHeight * 0.7;
 
     // Case of grid view
     if (isLayoutGridView != null && isLayoutGridView == true) {
-      height = maxHeight * 0.48;
+      height = maxHeight * 0.6;
     }
 
     final image = product.image;
 
-    return Stack(
-      children: [
-        SizedBox(
-          width: double.infinity,
-          height: height,
-          child: image.isNotEmpty ? _image(image) : const ImageNotFound(),
-        ),
-      ],
+    return SizedBox(
+      width: double.infinity,
+      height: height,
+      child: image.isNotEmpty ? _image(image) : const ImageNotFound(),
     );
   }
 
@@ -85,9 +84,13 @@ class ProductItem extends StatelessWidget {
   Expanded _buildInfo() {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(
+          left: 12.0,
+          right: 12.0,
+          top: 8.0,
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -100,16 +103,16 @@ class ProductItem extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
+            const SizedBox(
+              height: 8.0,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    '฿${product.price}',
-                    style: const TextStyle(
-                        fontSize: 14.0, fontWeight: FontWeight.bold),
-                  ),
+                Text(
+                  '฿${product.price}',
+                  style: const TextStyle(
+                      fontSize: 16.0, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   '${product.stock} ชิ้น',
