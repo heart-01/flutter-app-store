@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_store/app_router.dart';
 import 'package:flutter_store/themes/styles.dart';
 import 'package:flutter_store/utils/utility.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 var initialRoute = AppRouter.welcome;
 void main() async {
   // Test Logger
   Utility().testLogger();
 
-  WidgetsFlutterBinding.ensureInitialized(); // Must be used when the main function is async
+  WidgetsFlutterBinding .ensureInitialized(); // Must be used when the main function is async
 
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  if (prefs.getBool('welcomeStatus') == true) {
+  await Utility.initSharedPrefs();
+  if (Utility.getSharedPreference('welcomeStatus') == true) {
     initialRoute = AppRouter.login;
   }
 
