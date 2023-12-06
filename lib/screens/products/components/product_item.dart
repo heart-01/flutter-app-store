@@ -54,7 +54,9 @@ class ProductItem extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: height,
-      child: image.isNotEmpty ? _image(image) : const ImageNotFound(),
+      child: image != null && image.isNotEmpty
+          ? _image(image)
+          : const ImageNotFound(),
     );
   }
 
@@ -94,7 +96,7 @@ class ProductItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              product.name,
+              product.name ?? '',
               style: (isLayoutGridView ?? false)
                   ? const TextStyle(
                       fontSize: 14.0, fontWeight: FontWeight.normal)
