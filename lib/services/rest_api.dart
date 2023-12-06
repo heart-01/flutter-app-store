@@ -4,13 +4,13 @@ import 'package:flutter_store/services/dio_config.dart';
 import 'package:flutter_store/utils/utility.dart';
 
 class CallAPI {
-  // สร้าง Dio Instance
+  // Dio Instance
   final Dio _dio = DioConfig.dio;
 
   // Register API
   registerAPI(data) async {
     // Check Network Connection
-    if (await Utility.checkNetwork() == '') {
+    if (await Utility.checkNetwork() == false) {
       return jsonEncode({'message': 'No Network Connection'});
     } else {
       try {
@@ -26,7 +26,7 @@ class CallAPI {
   // Login API
   loginAPI(data) async {
     // Check Network Connection
-    if (await Utility.checkNetwork() == '') {
+    if (await Utility.checkNetwork() == false) {
       return jsonEncode({'message': 'No Network Connection'});
     } else {
       try {

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:logger/logger.dart';
@@ -23,18 +25,18 @@ class Utility {
   }
 
   // Check Network Connection
-  static Future<String> checkNetwork() async {
+  static Future<dynamic> checkNetwork() async {
     var checkNetwork = await Connectivity().checkConnectivity();
 
     if (checkNetwork == ConnectivityResult.none) {
-      return '';
+      return false;
     } else if (checkNetwork == ConnectivityResult.mobile) {
       return 'mobile';
     } else if (checkNetwork == ConnectivityResult.wifi) {
       return 'wifi';
     }
 
-    return '';
+    return false;
   }
 
   // Alert Dialog
