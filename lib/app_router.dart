@@ -5,6 +5,8 @@ import 'package:flutter_store/screens/drawerpage/info_screen.dart';
 import 'package:flutter_store/screens/forgot-password/forgot_password_screen.dart';
 import 'package:flutter_store/screens/login/login_screen.dart';
 import 'package:flutter_store/screens/products/components/product_add.dart';
+import 'package:flutter_store/screens/products/components/product_detail.dart';
+import 'package:flutter_store/screens/products/components/product_update.dart';
 import 'package:flutter_store/screens/register/register_screen.dart';
 import 'package:flutter_store/screens/welcome/welcome_screen.dart';
 
@@ -19,6 +21,8 @@ class AppRouter {
   static const String about = 'about';
   static const String contact = 'contact';
   static const String productAdd = 'productAdd';
+  static const String productDetail = 'productDetail';
+  static const String productUpdate = 'productUpdate';
 
   // Router Map key
   static get routes => {
@@ -31,5 +35,7 @@ class AppRouter {
     about: (context) => const AboutScreen(),
     contact: (context) => const ContactScreen(),
     productAdd: (context) => const ProductAdd(),
+    productDetail: (context) => const ProductDetail(),
+    productUpdate: (context) => const ProductUpdate(),
   };
 }

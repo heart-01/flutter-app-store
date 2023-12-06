@@ -85,7 +85,15 @@ class _HomeScreenState extends State<HomeScreen> {
         return ProductItem(
           isLayoutGridView: true,
           product: products[index],
-          handleOnClickProduct: () {},
+          handleOnClickProduct: () {
+            Navigator.pushNamed(
+              context,
+              AppRouter.productDetail,
+              arguments: {
+                'products': products[index].toJson(),
+              },
+            );
+          },
         );
       },
     );
@@ -102,7 +110,15 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 350,
             child: ProductItem(
               product: products[index],
-              handleOnClickProduct: () {},
+              handleOnClickProduct: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRouter.productDetail,
+                  arguments: {
+                    'products': products[index].toJson(),
+                  },
+                );
+              },
             ),
           ),
         );
