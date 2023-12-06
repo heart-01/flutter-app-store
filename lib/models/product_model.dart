@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final productModel = productModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<ProductModel> productModelFromJson(String str) => List<ProductModel>.from(
@@ -11,32 +7,32 @@ String productModelToJson(List<ProductModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ProductModel {
-  int id;
-  String name;
-  String description;
-  String barcode;
-  String image;
-  int stock;
-  int price;
-  int categoryId;
-  int userId;
-  int statusId;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? name;
+  String? description;
+  String? barcode;
+  String? image;
+  int? stock;
+  int? price;
+  int? categoryId;
+  int? userId;
+  int? statusId;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   ProductModel({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.barcode,
-    required this.image,
-    required this.stock,
-    required this.price,
-    required this.categoryId,
-    required this.userId,
-    required this.statusId,
-    required this.createdAt,
-    required this.updatedAt,
+    this.id,
+    this.name,
+    this.description,
+    this.barcode,
+    this.image,
+    this.stock,
+    this.price,
+    this.categoryId,
+    this.userId,
+    this.statusId,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
@@ -50,8 +46,12 @@ class ProductModel {
         categoryId: json["category_id"],
         userId: json["user_id"],
         statusId: json["status_id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -65,7 +65,7 @@ class ProductModel {
         "category_id": categoryId,
         "user_id": userId,
         "status_id": statusId,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
       };
 }
