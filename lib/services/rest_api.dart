@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter_store/main.dart';
 import 'package:flutter_store/services/dio_config.dart';
 import 'package:flutter_store/utils/utility.dart';
 
@@ -16,10 +15,10 @@ class CallAPI {
     } else {
       try {
         final response = await _dio.post('auth/register', data: data);
-        logger.d(response.data);
+        Utility().logger.d(response.data);
         return jsonEncode(response.data);
       } catch (error) {
-        logger.e(error);
+        Utility().logger.e(error);
       }
     }
   }
@@ -32,10 +31,10 @@ class CallAPI {
     } else {
       try {
         final response = await _dio.post('auth/login', data: data);
-        logger.d(response.data);
+        Utility().logger.d(response.data);
         return jsonEncode(response.data);
       } catch (error) {
-        logger.e(error);
+        Utility().logger.e(error);
       }
     }
   }

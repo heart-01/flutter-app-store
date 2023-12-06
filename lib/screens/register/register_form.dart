@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_store/app_router.dart';
 import 'package:flutter_store/components/rounded_button.dart';
 import 'package:flutter_store/components/text_input.dart';
-import 'package:flutter_store/main.dart';
 import 'package:flutter_store/services/rest_api.dart';
 import 'package:flutter_store/utils/utility.dart';
 
@@ -153,14 +152,14 @@ class RegisterForm extends StatelessWidget {
 
                       var body = jsonDecode(response);
 
-                      logger.i(body);
+                      Utility().logger.i(body);
 
                       // check context.mounted because it's in an async function.
                       if (context.mounted) {
                         if (body['message'] == 'No Network Connection') {
                           Utility.showAlertDialog(
                             context,
-                            'แจ้งเตือน',
+                            'error',
                             body['message'],
                           );
                         } else {
@@ -173,7 +172,7 @@ class RegisterForm extends StatelessWidget {
                             _formKeyRegister.currentState!.reset();
                             Utility.showAlertDialog(
                               context,
-                              'แจ้งเตือน',
+                              'error',
                               body['message'],
                             );
                           }
