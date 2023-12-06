@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isLayoutGridView = true;
+  bool isLayoutGridView = false;
 
   void handleOnClickChangeLayoutView() {
     setState(() {
@@ -64,8 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget layoutGridView(List<ProductModel> products) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2 // Number of column
-          ),
+        crossAxisCount: 2, // Number of column
+      ),
       itemCount: products.length,
       itemBuilder: (context, index) {
         return Padding(
@@ -86,10 +86,13 @@ class _HomeScreenState extends State<HomeScreen> {
       itemCount: products.length,
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ProductItem(
-            product: products[index],
-            handleOnClickProduct: () {},
+          padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+          child: SizedBox(
+            height: 350,
+            child: ProductItem(
+              product: products[index],
+              handleOnClickProduct: () {},
+            ),
           ),
         );
       },
