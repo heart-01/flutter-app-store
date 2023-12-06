@@ -17,7 +17,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   void _onIntroEnd(context) async {
     // Set welcome status when user click Done.
-    Utility.setSharedPreference('welcomeStatus', true);
+    await Utility.setSharedPreference('welcomeStatus', true);
 
     // goto Login
     Navigator.pushReplacementNamed(context, AppRouter.login);
