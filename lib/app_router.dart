@@ -1,3 +1,5 @@
+import 'package:flutter_store/screens/couter/couter_provider_screen.dart';
+import 'package:flutter_store/screens/couter/couter_stateful_screen.dart';
 import 'package:flutter_store/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter_store/screens/drawerpage/about_screen.dart';
 import 'package:flutter_store/screens/drawerpage/contact_screen.dart';
@@ -23,6 +25,8 @@ class AppRouter {
   static const String productAdd = 'productAdd';
   static const String productDetail = 'productDetail';
   static const String productUpdate = 'productUpdate';
+  static const String counterStateful = 'counterStateful';
+  static const String counterProvider = 'counterProvider';
 
   // Router Map key
   static get routes => {
@@ -37,5 +41,7 @@ class AppRouter {
     productAdd: (context) => const ProductAdd(),
     productDetail: (context) => const ProductDetail(),
     productUpdate: (context) => const ProductUpdate(),
+    counterStateful: (context) => const CounterStatefulScreen(),
+    counterProvider: (context) => const CounterProviderScreen(),
   };
 }

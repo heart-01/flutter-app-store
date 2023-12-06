@@ -93,6 +93,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ],
                 ),
                 ListTile(
+                  leading: const Icon(Icons.timer_outlined),
+                  title: const Text('Couter (With Stateful)'),
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRouter.counterStateful);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.timer_outlined),
+                  title: const Text('Couter (With Provider)'),
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRouter.counterProvider);
+                  },
+                ),
+                ListTile(
                   leading: const Icon(Icons.info_outline),
                   title: const Text('Info'),
                   onTap: () {
