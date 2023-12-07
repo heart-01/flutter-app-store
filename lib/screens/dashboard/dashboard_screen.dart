@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_store/app_router.dart';
 import 'package:flutter_store/screens/bottomnavpage/home_screen.dart';
@@ -67,6 +69,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  String? firstName, lastName, email;
+  getUserProfile() async {
+    final userInfo = await Utility.getSharedPreference('user');
+    final user = jsonDecode(userInfo);
+
+    setState(() {
+      firstName = user['userInfo']['firstname'];
+      lastName = user['userInfo']['lastname'];
+      email = user['userInfo']['email'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserProfile();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,13 +100,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ListView(
               shrinkWrap: true,
               children: [
-                const UserAccountsDrawerHeader(
-                  accountName: Text('Siwat Jermwatthana'),
-                  accountEmail: Text('admin@email.com'),
-                  currentAccountPicture: CircleAvatar(
+                UserAccountsDrawerHeader(
+                  accountName: Text('$firstName $lastName'),
+                  accountEmail: Text('$email'),
+                  currentAccountPicture: const CircleAvatar(
                     backgroundImage: AssetImage('assets/images/avatar.jpeg'),
                   ),
-                  otherAccountsPictures: [
+                  otherAccountsPictures: const [
                     CircleAvatar(
                       backgroundImage:
                           AssetImage('assets/images/noavartar.png'),
