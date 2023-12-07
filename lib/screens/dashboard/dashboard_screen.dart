@@ -71,13 +71,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   String? firstName, lastName, email;
   getUserProfile() async {
-    final userInfo = await Utility.getSharedPreference('user');
-    final user = jsonDecode(userInfo);
+    final user = await Utility.getSharedPreference('user');
+    final userInfo = jsonDecode(user);
 
     setState(() {
-      firstName = user['userInfo']['firstname'];
-      lastName = user['userInfo']['lastname'];
-      email = user['userInfo']['email'];
+      firstName = userInfo['userInfo']['firstname'];
+      lastName = userInfo['userInfo']['lastname'];
+      email = userInfo['userInfo']['email'];
     });
   }
 
