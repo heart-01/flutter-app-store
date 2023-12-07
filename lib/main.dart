@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 var initialRoute = AppRouter.welcome;
+var languageCode = 'en';
 void main() async {
   // Test Logger
   Utility().testLogger();
@@ -21,6 +22,9 @@ void main() async {
   } else if (await Utility.getSharedPreference('welcomeStatus') == true) {
     initialRoute = AppRouter.login;
   }
+
+  // Get language code from shared preference
+  languageCode = await Utility.getSharedPreference('languageCode') ?? 'en';
 
   runApp(
     const App(),
@@ -36,7 +40,7 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => CounterProvider()), // _ = context (not used in this case)
         ChangeNotifierProvider(create: (_) => TimerProvider()),
-        ChangeNotifierProvider(create: (_) => LocaleProvider(const Locale('en'))),
+        ChangeNotifierProvider(create: (_) => LocaleProvider(Locale(languageCode))),
       ],
       child: Consumer<LocaleProvider>(
         builder: (context, localeProvider, child) {
