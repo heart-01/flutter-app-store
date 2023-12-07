@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_store/app_router.dart';
 import 'package:flutter_store/providers/locale_provider.dart';
+import 'package:flutter_store/providers/theme_provider.dart';
 import 'package:flutter_store/themes/colors.dart';
+import 'package:flutter_store/themes/styles.dart';
 import 'package:flutter_store/utils/utility.dart';
 import 'package:provider/provider.dart';
 
@@ -49,15 +51,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
         children: [
-          ListView(
-            shrinkWrap: true,
-            children: [
-              _buildHeader(),
-              _buildListMenu(),
-            ],
-          )
+          _buildHeader(),
+          _buildListMenu(),
+          _buildSwitchTheme(),
         ],
       ),
     );
@@ -65,36 +64,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   // widget for show profile from shared preference
   Widget _buildHeader() {
-    return Container(
-      height: 250,
-      decoration: const BoxDecoration(
-        color: primary,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            AppLocalizations.of(context)!.hello,
-            style: const TextStyle(color: Colors.white, fontSize: 20),
-          ),
-          const SizedBox(height: 10),
-          const CircleAvatar(
-            radius: 50,
-            backgroundImage: AssetImage('assets/images/noavartar.png'),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            '$firstName $lastName',
-            style: const TextStyle(
-                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-          ),
-          Text(
-            '$email',
-            style: const TextStyle(fontSize: 16, color: Colors.white),
-          ),
-        ],
-      ),
-    );
+    return Consumer<ThemeProvider>(builder: (context, provider, child) {
+      return Container(
+        height: 250,
+        decoration: BoxDecoration(
+          color: provider.isDark ? primaryText : primary,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              AppLocalizations.of(context)!.hello,
+              style: const TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            const SizedBox(height: 10),
+            const CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/images/noavartar.png'),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              '$firstName $lastName',
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+            Text(
+              '$email',
+              style: const TextStyle(fontSize: 16, color: Colors.white),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   // widget for menu list
@@ -209,6 +212,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onTap: handleOnClickLogout,
         ),
       ],
+    );
+  }
+
+  Widget _buildSwitchTheme() {
+    return Consumer<ThemeProvider>(
+      builder: (context, provider, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Switch(
+              value: provider.isDark,
+              onChanged: (value) {
+                provider
+                    .setTheme(value ? AppTheme.darkTheme : AppTheme.lightTheme);
+              },
+            ),
+            Text(provider.isDark ? 'Dark Mode' : 'Light Mode'),
+          ],
+        );
+      },
     );
   }
 }

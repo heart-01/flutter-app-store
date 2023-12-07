@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_store/providers/theme_provider.dart';
 import 'package:flutter_store/themes/colors.dart';
+import 'package:provider/provider.dart';
 
 class ResponsiveLayout extends StatelessWidget {
   final Widget webChild;
@@ -14,22 +16,25 @@ class ResponsiveLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [primaryDark, primary],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+      body: Consumer<ThemeProvider>(builder: (context, provider, child) {
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: provider.isDark
+                  ? [primaryText, primaryText]
+                  : [primaryLight, primary],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
           ),
-        ),
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-            debugPrint('touch screen');
-          },
-          child: Center(
-            child: SingleChildScrollView(
-              child: Card(
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              debugPrint('touch screen');
+            },
+            child: Center(
+              child: SingleChildScrollView(
+                child: Card(
                   elevation: 12,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -44,11 +49,13 @@ class ResponsiveLayout extends StatelessWidget {
                       }
                       return mobileChild;
                     },
-                  )),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

@@ -18,6 +18,7 @@ Widget textInput({
     obscureText: obscureText,
     decoration: InputDecoration(
       hintText: hintText,
+      hintStyle: const TextStyle(color: Colors.grey),
       prefixIcon: prefixIcon,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(40),
@@ -52,6 +53,7 @@ Widget textInputWithoutController({
     obscureText: obscureText,
     decoration: InputDecoration(
       hintText: hintText,
+      hintStyle: const TextStyle(color: Colors.grey),
       prefixIcon: prefixIcon,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(40),
@@ -60,7 +62,6 @@ Widget textInputWithoutController({
       filled: true,
       isDense: true,
       contentPadding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-      fillColor: Colors.grey[300],
     ),
     validator: validator,
     onSaved: onSaved,

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_store/app_router.dart';
+import 'package:flutter_store/providers/theme_provider.dart';
 import 'package:flutter_store/screens/bottomnavpage/home_screen.dart';
 import 'package:flutter_store/screens/bottomnavpage/notification_screen.dart';
 import 'package:flutter_store/screens/bottomnavpage/profile_screen.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_store/screens/bottomnavpage/setting_screen.dart';
 import 'package:flutter_store/themes/colors.dart';
 import 'package:flutter_store/utils/utility.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -93,77 +95,89 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         title: Text(titleScreen),
       ),
-      drawer: Drawer(
-        backgroundColor: Colors.white,
-        child: Column(
-          children: [
-            ListView(
-              shrinkWrap: true,
+      drawer: Consumer<ThemeProvider>(
+        builder: (context, provider, child) {
+          return Drawer(
+            backgroundColor: provider.isDark ? primaryText : Colors.white,
+            child: Column(
               children: [
-                UserAccountsDrawerHeader(
-                  accountName: Text('$firstName $lastName'),
-                  accountEmail: Text('$email'),
-                  currentAccountPicture: const CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/avatar.jpeg'),
-                  ),
-                  otherAccountsPictures: const [
-                    CircleAvatar(
-                      backgroundImage:
-                          AssetImage('assets/images/noavartar.png'),
+                ListView(
+                  shrinkWrap: true,
+                  children: [
+                    Consumer<ThemeProvider>(
+                      builder: (context, provider, child) {
+                        return UserAccountsDrawerHeader(
+                          accountName: Text('$firstName $lastName'),
+                          accountEmail: Text('$email'),
+                          decoration: BoxDecoration(
+                            color: provider.isDark ? primaryText : primary,
+                          ),
+                          currentAccountPicture: const CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/images/avatar.jpeg'),
+                          ),
+                          otherAccountsPictures: const [
+                            CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/images/noavartar.png'),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.timer_outlined),
+                      title: const Text('Couter (With Stateful)'),
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRouter.counterStateful);
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.timer_outlined),
+                      title: const Text('Couter (With Provider)'),
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRouter.counterProvider);
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.info_outline),
+                      title: Text(AppLocalizations.of(context)!.menu_info),
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRouter.info);
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.person_outline),
+                      title: Text(AppLocalizations.of(context)!.menu_about),
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRouter.about);
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.email_outlined),
+                      title: Text(AppLocalizations.of(context)!.menu_contact),
+                      onTap: () {
+                        Navigator.pushNamed(context, AppRouter.contact);
+                      },
                     ),
                   ],
                 ),
-                ListTile(
-                  leading: const Icon(Icons.timer_outlined),
-                  title: const Text('Couter (With Stateful)'),
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRouter.counterStateful);
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.timer_outlined),
-                  title: const Text('Couter (With Provider)'),
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRouter.counterProvider);
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.info_outline),
-                  title: Text(AppLocalizations.of(context)!.menu_info),
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRouter.info);
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.person_outline),
-                  title: Text(AppLocalizations.of(context)!.menu_about),
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRouter.about);
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.email_outlined),
-                  title: Text(AppLocalizations.of(context)!.menu_contact),
-                  onTap: () {
-                    Navigator.pushNamed(context, AppRouter.contact);
-                  },
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ListTile(
+                        leading: const Icon(Icons.exit_to_app_outlined),
+                        title: Text(AppLocalizations.of(context)!.menu_logout),
+                        onTap: handleOnClickLogout,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ListTile(
-                    leading: const Icon(Icons.exit_to_app_outlined),
-                    title: Text(AppLocalizations.of(context)!.menu_logout),
-                    onTap: handleOnClickLogout,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
       body: renderScreen[indexCurrentRenderScreen],
       bottomNavigationBar: BottomNavigationBar(
